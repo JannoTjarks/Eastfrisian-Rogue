@@ -9,13 +9,13 @@ namespace EastfrisianRogue
     public class World
     {
         private Tile[,] tiles;
-        private int width;
-        private int height;
+        private int _width;
+        private int _height;
         public Creature player;
         public List<Creature> creatures;
 
-        public int Width { get => this.width; set => this.width = value; }
-        public int Height { get => this.height; set => this.height = value; }
+        public int Width { get => this._width; set => this._width = value; }
+        public int Height { get => this._height; set => this._height = value; }
 
         public World(Tile[,] tiles, List<Creature> creatures)
         {
@@ -37,6 +37,14 @@ namespace EastfrisianRogue
                                 where creature.X == x && creature.Y == y
                                 select creature;
             return queryCreature.FirstOrDefault();
+        }
+
+        public List<Creature> GetCreatureInArea(int x, int y, int width, int height)
+        {
+            return creatures.Where(c => c.X > x - width / 2 &&
+                                        c.X < x + width / 2 &&
+                                        c.Y > y - height / 2 &&
+                                        c.Y < y + height / 2).ToList();
         }
 
         public Tile GetTileAt(int x, int y)

@@ -37,6 +37,57 @@ namespace EastfrisianRogue
             }
         }
 
+        public Creature CreateCreature(String type, int x, int y) 
+        {
+            if (type == "zombie") 
+            {
+                return new Creature("zombie", 'z', ConsoleColor.Green, x, y, "aggressive", 100, 40);
+            } 
+            else if (type == "sheep") 
+            {
+                return new Creature("sheep", 's', ConsoleColor.White, x, y, "docile", 10, 0);
+            } 
+            else 
+            {
+                return null;
+            }
+        }
+
+        public WorldBuilder PopulateWorld(int nrOfCreatures)
+        {
+            var rnd = new Random();
+            int rndX = 0;
+            int rndY = 0;
+            int creatureType = 0;
+            Creature creature = null;
+
+            for(int i = 0; i < nrOfCreatures; i++) 
+            {
+                do 
+                {
+                    rndX = rnd.Next(_width);
+                    rndY = rnd.Next(_height);
+
+                    if(_height <= 1)
+                    {
+                        _height = 2;
+                    }
+                }
+                while (_tiles[rndX, rndY].IsBlocked);
+
+                creatureType = rnd.Next(2);
+                if (creatureType == 0) {
+                    creature = CreateCreature("zombie", rndX, rndY);
+                } else if (creatureType == 1) {
+                    creature = CreateCreature("sheep", rndX, rndY);
+                }
+
+                _creatures.Add(creature);
+            }            
+
+            return this;
+        }
+
         public WorldBuilder Fill(String tileType)
         {
             for (int x = 0; x < _width; x++)

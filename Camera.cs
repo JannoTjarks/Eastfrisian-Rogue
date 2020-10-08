@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Timers;
 using EastfrisianRogue.Entities;
 
 namespace EastfrisianRogue
@@ -47,7 +43,7 @@ namespace EastfrisianRogue
                 {                    
                     tile = world.GetTileAt(origin.X + x, origin.Y + y);
 
-                    Draw(tile.Glyph, x, y, tile.Color, tile.BackgroundColor);
+                    Draw(tile.Glyph, x, y+2, tile.Color, tile.BackgroundColor);
                 }
             }
 
@@ -60,7 +56,7 @@ namespace EastfrisianRogue
 
                 if ((spx >= 0 && spx < _screenWidth) && (spy >= 0 && spy < _screenHeight)) 
                 {
-                    Draw(creature.Glyph, spx, spy, creature.Color, world.GetTileAt(creature.X, creature.Y).BackgroundColor);
+                    Draw(creature.Glyph, spx, spy + 2 , creature.Color, world.GetTileAt(creature.X, creature.Y).BackgroundColor);
                 }
             }
         }
